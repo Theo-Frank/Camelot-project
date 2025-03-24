@@ -13,12 +13,16 @@ import com.actions.Take;
 import com.sequences.CreateCharacterSequence;
 import com.actions.Exit;
 import com.actions.Enter;
-import com.actions.ShowDialog;
 import com.actions.*;
 import com.sequences.*;
-
+import com.sequences.DialogSequence;
+import myclassproject.mystorygraph.*;
 //Theo Frank
 import static myclassproject.mystorygraph.MyStoryEntities.*;
+
+import com.actions.Wave;
+
+
 
 
 
@@ -38,7 +42,7 @@ public class MyNodeBuilder extends NodeBuilder {
 	 */
 	@BuilderMethod
 	public void rootActions() {
-		var root = get(NodeLabels.root.toString());
+		var root = get(MyNodeLabels.root.toString());
 		root.add(new CreateAll(List.of(GreatHall, City )))
 		.add(new CreateCharacterSequence(player))
 		.add(new CreateCharacterSequence(King))
@@ -48,12 +52,10 @@ public class MyNodeBuilder extends NodeBuilder {
 		.add(new SetPosition(player, GreatHall.Supplicant))
 		.add(new SetPosition(King, GreatHall.Throne))
 		.add(new SetPosition(beggar, City.Alley2))
-		.add(new SetPosition(Bartender, Tavern.))
+		.add(new SetPosition(Bartender, Tavern.Barrel))
 		.add(new SetPosition(Knight, City.RedHouseDoor))
 		.add(new Face(player,King))
-		.add(new CreateItem(sword,Sword))
-		.add(new CreateItem(Bottle, Bottle))
-		.add(new SetPosition(Sword, King))
+		.add(new SetPosition(sword, King))
 		.add(new SetPosition(Bottle,Bartender))
 		.add(new SetCameraFocus(player))
 		.add(new ShowMenu());
@@ -63,65 +65,65 @@ public class MyNodeBuilder extends NodeBuilder {
 		//root.add(new CreateAll(List.of(cottage, town, sword)));
 		//Theo Frank
 	}
-	@BuilderMethod
-	public void atGreatHall() {
-		var node = get(NodeLabels.atGreatHall.toString());
-		node.add(new HideMenu())
-		.add(new EnableInput());
-		.add(new SetDialog(King, "Hero, would you like to accept a quest on behalf of the kingdom?[Yes|Yes!] [No|No Thanks]"))
-		.add(new ShowDialog());
-		//Theo Frank
-		
+	 @BuilderMethod
+	 public void atGreatHall() {
+	     var node = get(MyNodeLabels.atGreatHall.toString());
+	     node.add(new HideMenu())
+	     .add(new EnableInput())
+	     .add(new DialogSequence(King, null,List.of("Hero, would you like to accept a quest on behalf of the kingdom?"),List.of("[Yes|Yes!]", "[No|No Thanks]")));
+	 }
+	 //Theo Frank
+
+	 @BuilderMethod
+	 public void agreedToQuest() {
+	     var node = get(MyNodeLabels.agreedToQuest.toString());
+	     node.add(new HideDialog())
+	     .add(new DialogSequence(King, null,List.of("Thank you for agreeing to aid my kingdom. Recently, my kingdom has lost 2 keys of great importance and I need you to retrieve them. Each key is marked with a different color symbolizing a core of my kingdom: RED and BLUE. I have heard rumors that a bandit has one of the keys. Before you leave, here is something to aid you on your quest."),List.of("[Accept Sword|Accept Sword]")))
+	     .add(new Take(player, sword, King));
+	 }
+	 //Theo Frank
+	 @BuilderMethod
+	 public void doNotTakeQuest() {
+	     var node = get(MyNodeLabels.doNotTakeQuest.toString());
+	     node.add(new HideDialog())
+	     .add(new DialogSequence(player, null,List.of("And the Hero decided not to accept the quest, choosing to live happily ever after on a farm. The end."),List.of("[Close|Close]")))
+	     .add(new ShowMenu());
 	}
-	@BuilderMethod
-	public void agreedToQuest() {
-		var node = get(NodeLabel.agreedToQuest.toString());
-		node.add(new HideDialog())
-		.add(new SetDialog(King, " Thank you for Agreeing to aid my kingdom. Resently, my kingdom has lost 2 keys of great importance and I need you to retrieve them for me. Each key is marked with a different color symbolising a core of my kingdom, RED and BLUE.  I have heard rumors that a bandit has one of the keys. Before you leave here is something to aid you on your quest. [Accept Sword|Accept Sword]"))
-		.add(new ShowDialog())
-		.add(new Take(player, sword, King));
-		//Theo Frank
-	}
-	@BuilderMethod
-	public void doNotTakeQuest() {
-		var node = get(NodeLabel.doNotTakeQuest.toString());
-		node.add(new HideDialog())
-		.add(new SetNarration("And the Hero decided not to accept the quest, Deciding to live happily ever after on a farm, the end"))
-		.add(new ShowMenu());
-		//Theo Frank
-	}
+	 //Theo frank
 	@BuilderMethod
 	public void leaveGreatHall() {
-		var node = get(NodeLabel.leaveGreatHall.toString());
+		var node = get(MyNodeLabels.leaveGreatHall.toString());
 		node.add(new HideDialog())
 		.add(new Exit(player, GreatHall.Gate, true));
-		//Theo Frank
 		
-		
-	}
+	}//theo Frank
 	@BuilderMethod
 	public void enterCity() {
-		var node = get(NodeLabel.enterCity.toString());
-		node.add(new Enter(player, City.BrownHouseDoor, true))
-		.add(new EnableIcon("Talk", Talk, beggar, "Talk with the beggar", false))
-		.add(new EnableIcon("Talk",Talk, Knight, "Talk with the Knight", false))
+		var node = get(MyNodeLabels.enterCity.toString());
+        node.add(new Enter(player, City.Door, true))
 		.add(new Exit(player, City.NorthEnd, true))
 		.add(new Exit(player,City.WestEnd,true))
-		.add(new Exit(player, city.BlueHouseDoor,true));
+		.add(new Exit(player, City.BlueHouseDoor,true));
 		
-	}
-	@BuilderMethod
-	public void enterTavern() {
-		var node = get(NodeLabel.enterTavern.toString());
-		node.add(new Enter(player, Tavern.Door,true))
-		Wave(Bartender)
-		.add(new EnableIcon("Talk",Talk, Bartender, "Talk with the Bartender", false))
-		.add(new Exit(player, Tavern.Door,true));
-	}
-	@BuilderMethod
-	public void talkWithBeggar() {
-		var node = get(NodeLabel.talkWithBeggar.toString());
-		node.add(new SetDialog("Hello my friend, I heard you are off on a quest. I hope you succeed and aid our kingdom"))
-		.add(new ShowDialog());
-	}
+	}//Theo Frank
+    @BuilderMethod
+    public void enterTavern() {
+        var node = get(MyNodeLabels.enterTavern.toString());
+        node.add(new Enter(player, Tavern.Door, true))
+        .add(new Wave(Bartender))
+        .add(new Face(player,Bartender))
+        .add(new Exit(player, Tavern.Door, true));
+    }//Theo Frank
+    @BuilderMethod
+    public void talkWithBartender() {
+        var node = get(MyNodeLabels.talkWithBartender.toString());
+        node.add(new Face(player, Bartender))
+            .add(new DialogSequence(Bartender, null,
+                List.of("Would you like a drink to relax my young Hero?"),List.of("[No thanks|Leave]")));
+    }//Theo Frank
+    @BuilderMethod
+    public void talkWithBeggar() {
+        var node = get(MyNodeLabels.talkWithBeggar.toString());
+        node.add(new DialogSequence(beggar, null,List.of("Hello my friend, I heard you are off on a quest. I hope you succeed and aid our kingdom."),List.of("[Close|Close]")));
+    }//Theo Frank
 }

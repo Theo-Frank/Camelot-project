@@ -28,7 +28,7 @@ public final class MyStoryEntities {
 	public static final Characters Knight = new Characters("Knight", BodyTypes.A, Clothing.HeavyArmour, HairStyle.Short, Colors.Black,6);
 	public static final Characters Bartender = new Characters("Bartender", BodyTypes.C, Clothing.Merchant, HairStyle.Spiky, Colors.Black,6);
 	//Places-Theo Frank
-	public static final Place GreatHall = new Place("Kings Palace", PlaceTypes.GreatHall);
+	public static final Place GreatHall = new Place("GreatHall", PlaceTypes.GreatHall);
 	public static final Place City = new Place("City", PlaceTypes.City);
 	public static final Place Tavern = new Place("Tavern", PlaceTypes.Tavern);
 	
