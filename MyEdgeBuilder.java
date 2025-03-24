@@ -31,13 +31,13 @@ public class MyEdgeBuilder extends NodeBuilder {
 	public void rootEdges() {
 		var root = get(MyNodeLabels.root.toString());
 		var choice = new MenuChoice(MenuChoice.Options.Start);
-		var nextNode = get(MyNodeLabels.atGreatHall.toString());
+		var nextNode = get(MyNodeLabels.GreatHall.toString());
 		root.add(new Edge(choice, nextNode));
 	}
 	
 	@BuilderMethod
 	public void startQuestEdges() {
-		var node = get(MyNodeLabels.atGreatHall.toString());
+		var node = get(MyNodeLabels.GreatHall.toString());
 		var nextNodeIfAccepted = get(MyNodeLabels.agreedToQuest.toString());
 		var acceptChoice = new DialogChoice("Accept quest");
 		node.add(new Edge(acceptChoice, nextNodeIfAccepted));
