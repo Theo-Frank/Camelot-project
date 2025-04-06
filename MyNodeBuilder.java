@@ -24,11 +24,11 @@ import com.sequences.DialogSequence;
 import myclassproject.mystorygraph.*;
 //Theo Frank
 import static myclassproject.mystorygraph.MyStoryEntities.*;
+import com.actions.Attack;
+import com.actions.Give;
+
 
 import com.actions.Wave;
-
-
-
 
 
 
@@ -57,8 +57,16 @@ public class MyNodeBuilder extends NodeBuilder {
 		.add(new CreateCharacterSequence(Priest))
 		.add(new CreateCharacterSequence(MysteryMan))
 		.add(new CreateCharacterSequence(Merchant))
-		.add(new SetPosition(Merchant, Port.BigStall)
-		.add(new SetPosition(MysteryMan, Bridge.SouthSign)
+		.add(new CreateCharacterSequence(Bandit))
+		.add(new SetPosition(Bandit, Ruins.Plant))
+		.add(new SetPosition(Merchant, Port.BigStall))
+		.add(new SetPosition(Apple,MysteryMan))
+		.add(new SetPosition(sword1,Bandit))
+		.add(new SetPosition(Bandit, Ruins.Plant))
+		.add(new SetPosition(RedKey,Merchant))
+		.add(new SetPosition(BlueKey,Bandit))
+		.add(new SetPosition(Bag,Bandit))
+		.add(new SetPosition(MysteryMan, Bridge.SouthSign))
 		.add(new SetPosition(Priest, ForestPath.Plant))
 		.add(new SetPosition(player, GreatHall.Supplicant))
 		.add(new SetPosition(King, GreatHall.Throne))
@@ -135,7 +143,7 @@ public class MyNodeBuilder extends NodeBuilder {
     }//Theo Frank
     @BuilderMethod
     public void takeDrink() {
-    	var node(get(MyNodeLabels.takeDrink.toString());
+    	var node= get(MyNodeLabels.takeDrink.toString());
     	node.add(new DisableInput())
     	.add(new WalkTo(player, Tavern.Chair))
     	.add(new Sit(player,Tavern.Chair ))
@@ -209,7 +217,148 @@ public class MyNodeBuilder extends NodeBuilder {
         node.add(new Enter(player, ForestPath.WestEnd, true));
     }
 
-    
+    @BuilderMethod
+    public void atRuins() {
+        var node = get(MyNodeLabels.atRuins.toString());
+        node.add(new Face(player, Bandit))
+        .add(new DialogSequence(Bandit, null,
+                List.of("Hello traveler. Do you have anything of value that I could take from you today?"),
+                List.of("[Attack|attackBandit]", "[Let Bandit Attack|banditAttacksPlayer]")));
+    }
+    @BuilderMethod
+    public void killBandit() {
+        var node = get(MyNodeLabels.killBandit.toString());
+        node.add(new Attack(player, Bandit, true))  
+            .add(new Die(Bandit))
+            .add(new DialogSequence(player, null,
+                List.of("The bandit drops a Blue Key."),
+                List.of("[Pick up the Blue Key|pickUpBlueKey]")));
+    }
+    @BuilderMethod
+    public void pickUpBlueKey() {
+        var node = get(MyNodeLabels.pickUpBlueKey.toString());
+        node.add(new Take(player, BlueKey))
+            .add(new ShowMenu());
+    }
+    @BuilderMethod
+    public void banditAttacksPlayer() {
+        var node = get(MyNodeLabels.banditAttacksPlayer.toString());
+        node.add(new Attack(Bandit, player, true))
+            .add(new Die(player))
+            .add(new FadeOut());
+    }
+    @BuilderMethod
+    public void death() {
+    	var node = get(MyNodeLabels.death.toString());
+    	node.add(new FadeIn())
+        .add(new Revive(player))
+        .add(new EnableEffect(player, Resurrection))
+        .add(new DialogSequence(Bandit, null,
+            List.of("Oh my god... what have I done? I need to fix my ways. Here, take everything I own."),
+            List.of("[Accept Gift|takeRedKeyAndBag]")));
+
+    }
+    @BuilderMethod
+    public void takeRedKeyAndBag() {
+        var node = get(MyNodeLabels.takeRedKeyAndBag.toString());
+        node.add(new Give(Bandit, RedKey, player))
+            .add(new Give(Bandit, Bag, player))
+            .add(new ShowMenu());
+    }
+    @BuilderMethod
+    public void leaveCityToBridge() {
+        var node = get(MyNodeLabels.leaveCityToBridge.toString());
+        node.add(new Exit(player, City.WestEnd, true))
+            .add(new Enter(player, Bridge.NorthEnd, true));
+    }
+    @BuilderMethod
+    public void returnToCityFromBridge() {
+        var node = get(MyNodeLabels.returnToCityFromBridge.toString());
+        node.add(new Exit(player, Bridge.NorthEnd, true))
+            .add(new Enter(player, City.WestEnd, true));
+    }
+
+    @BuilderMethod
+    public void atBridge() {
+        var node = get(MyNodeLabels.atBridge.toString());
+        node.add(new Face(player, MysteryMan))
+            .add(new DialogSequence(MysteryMan, null,
+                List.of("Hello young traveler, would you like to answer a riddle for me today?"),
+                List.of("[Yes|answerRiddle]", "[No|exitBridge]")));
+    }
+    @BuilderMethod
+    public void exitBridge() {
+        var node = get(MyNodeLabels.exitBridge.toString());
+        node.add(new Exit(player, Bridge.SouthEnd, true))
+            .add(new Enter(player, Port.Exit, true));
+    }
+    @BuilderMethod
+    public void answerRiddle() {
+        var node = get(MyNodeLabels.answerRiddle.toString());
+        node.add(new DialogSequence(MysteryMan, null,
+            List.of("If you have me, you will want to share me. If you share me, you will no longer have me. What am I?"),
+            List.of("[A secret|riddleAnswered]")));
+    }
+    @BuilderMethod
+    public void riddleAnswered() {
+        var node = get(MyNodeLabels.riddleAnswered.toString());
+        node.add(new DialogSequence(MysteryMan, null,
+            List.of("Thank you for answering this riddle, here is an apple for your journey."),
+            List.of("[Thank you|ShowMenu]")))
+            .add(new Give(MysteryMan, Apple, player));
+    }
+    @BuilderMethod
+    public void atPort() {
+        var node = get(MyNodeLabels.atPort.toString());
+        node.add(new WalkTo(player, Port.BigStall))
+            .add(new Face(player, Merchant))
+            .add(new DialogSequence(Merchant, null,
+                List.of("Hello my young friend. Would you care to buy this key that I found?"),
+                List.of("[Yes|buyKey]", "[No|merchantInsists]")));
+    }
+    @BuilderMethod
+    public void merchantInsists() {
+        var node = get(MyNodeLabels.merchantInsists.toString());
+        node.add(new DialogSequence(Merchant, null,
+            List.of("Are you sure you don't want to get this key?"),
+            List.of("[Yes|ShowMenu]")));
+    }
+    @BuilderMethod
+    public void buyKey() {
+        var node = get(MyNodeLabels.buyKey.toString());
+        node.add(new Give(Merchant, RedKey, player))
+            .add(new ShowMenu());
+    }
+    @BuilderMethod
+    public void leavePort() {
+        var node = get(MyNodeLabels.leavePort.toString());
+        node.add(new Exit(player, Port.Exit, true))
+            .add(new Enter(player, Bridge.SouthEnd, true));
+    }
+    @BuilderMethod
+    public void talkWithKnight() {
+        var node = get(MyNodeLabels.talkWithKnight.toString());
+        node.add(new Face(player, Knight))
+            .add(new DialogSequence(Knight, null,
+                List.of("Have you completed your quest and found all the keys?"),
+                List.of("[Yes|questComplete]", "[Not yet|ShowMenu]")));
+    }
+    @BuilderMethod
+    public void questComplete() {
+        var node = get(MyNodeLabels.questComplete.toString());
+        node.add(new FadeOut());
+    }
+    @BuilderMethod
+    public void returnToThrone() {
+        var node = get(MyNodeLabels.returnToThrone.toString());
+        node.add(new FadeIn())
+            .add(new SetPosition(player, GreatHall.Supplicant))
+            .add(new SetCameraFocus(player))
+            .add(new Face(King, player))
+            .add(new DialogSequence(King, null,
+                List.of("Thank you, my young friend, for your heroic journey to retrieve the keys."),
+                List.of("[The End|theEnd]")));
+    }
 
 
 }

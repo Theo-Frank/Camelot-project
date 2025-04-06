@@ -30,7 +30,7 @@ public final class MyStoryEntities {
 	public static final Characters Priest = new Characters("Priest", BodyTypes.G, Clothing.Priest, HairStyle.Straight, Colors.Black,6);
 	public static final Characters Merchant = new Characters("Merchant", BodyTypes.B, Clothing.Merchant, HairStyle.Musketeer_Full, Colors.Black,6);
 	public static final Characters MysteryMan = new Characters("MysteryMan", BodyTypes.F, Clothing.Warlock, HairStyle.Mage_Full, Colors.Black,6);
-	
+	public static final Characters Bandit = new Characters("Bandit", BodyTypes.C, Clothing.Bandit, HairStyle.Short_Full, Colors.Black,6);
 	//Places-Theo Frank
 	public static final Place GreatHall = new Place("GreatHall", PlaceTypes.GreatHall);
 	public static final Place City = new Place("City", PlaceTypes.City);
@@ -48,7 +48,8 @@ public final class MyStoryEntities {
 	public static final Item RedKey = new Item("RedKey",ItemTypes.RedKey);
 	public static final Item sword1 = new Item("sword", ItemTypes.Sword);
 	public static final Item Bag = new Item("Bag", ItemTypes.Bag);
-	public static final Item 
+	public static final Item Apple = new Item("Apple", ItemTypes.Apple);
+	// Effects Theo Frank
 
 	
 	

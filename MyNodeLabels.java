@@ -5,5 +5,6 @@ public enum MyNodeLabels{
 	root, GreatHall,agreedToQuest, doNotTakeQuest,leaveGreatHall,enterCity, 
 	enterTavern,talkWithBartender,takeDrink,talkWithBeggar,enterForestPath,exitForestPath,
 	atForestPath,talkWithPriest,giveSwordToPriest,leaveToRuins,enterRuins,leaveRuins,
-	returnToForestPathFromRuins//other nodes
+	returnToForestPathFromRuins,killBandit,pickUpBlueKey,banditAttacksPlayer,death,takeRedKeyAndBag,atRuins,enterBridge,atBridge,exitBridge,answerRiddle,
+	riddleAnswered,atPort,merchantInsists,buyKey,leavePort,talkWithKnight,questComplete,returnToThrone,leaveCityToBridge,returnToCityFromBridge//other nodes
 }
