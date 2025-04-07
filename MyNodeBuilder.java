@@ -58,21 +58,21 @@ public class MyNodeBuilder extends NodeBuilder {
 		.add(new CreateCharacterSequence(MysteryMan))
 		.add(new CreateCharacterSequence(Merchant))
 		.add(new CreateCharacterSequence(Bandit))
-		.add(new SetPosition(Bandit, Ruins.Plant))
-		.add(new SetPosition(Merchant, Port.BigStall))
+		.add(new SetPosition(Bandit, Plant))
+		.add(new SetPosition(Merchant, BigStall))
 		.add(new SetPosition(Apple,MysteryMan))
 		.add(new SetPosition(sword1,Bandit))
-		.add(new SetPosition(Bandit, Ruins.Plant))
+		.add(new SetPosition(Bandit, Plant))
 		.add(new SetPosition(RedKey,Merchant))
 		.add(new SetPosition(BlueKey,Bandit))
 		.add(new SetPosition(Bag,Bandit))
-		.add(new SetPosition(MysteryMan, Bridge.SouthSign))
-		.add(new SetPosition(Priest, ForestPath.Plant))
-		.add(new SetPosition(player, GreatHall.Supplicant))
-		.add(new SetPosition(King, GreatHall.Throne))
-		.add(new SetPosition(beggar, City.Alley2))
-		.add(new SetPosition(Bartender, Tavern.Barrel))
-		.add(new SetPosition(Knight, City.RedHouseDoor))
+		.add(new SetPosition(MysteryMan, SouthSign))
+		.add(new SetPosition(Priest, Plant1))
+		.add(new SetPosition(player, RightThrone))
+		.add(new SetPosition(King, Throne))
+		.add(new SetPosition(beggar,Fountain))
+		.add(new SetPosition(Bartender, Barrel))
+		.add(new SetPosition(Knight, RedHouseDoor))
 		.add(new Face(player,King))
 		.add(new SetPosition(sword, King))
 		.add(new SetPosition(Bottle,Bartender))
@@ -113,25 +113,25 @@ public class MyNodeBuilder extends NodeBuilder {
 	public void leaveGreatHall() {
 		var node = get(MyNodeLabels.leaveGreatHall.toString());
 		node.add(new HideDialog())
-		.add(new Exit(player, GreatHall.Gate, true));
+		.add(new Exit(player, Gate, true));
 		
 	}//theo Frank
 	@BuilderMethod
 	public void enterCity() {
 		var node = get(MyNodeLabels.enterCity.toString());
-        node.add(new Enter(player, City.Door, true))
-		.add(new Exit(player, City.NorthEnd, true))
-		.add(new Exit(player,City.WestEnd,true))
-		.add(new Exit(player, City.BlueHouseDoor,true));
+        node.add(new Enter(player, EastEnd, true))
+		.add(new Exit(player, NorthEnd, true))
+		.add(new Exit(player,WestEnd,true))
+		.add(new Exit(player, BlueHouseDoor,true));
 		
 	}//Theo Frank
     @BuilderMethod
     public void enterTavern() {
         var node = get(MyNodeLabels.enterTavern.toString());
-        node.add(new Enter(player, Tavern.Door, true))
+        node.add(new Enter(player, Door, true))
         .add(new Wave(Bartender))
         .add(new Face(player,Bartender))
-        .add(new Exit(player, Tavern.Door, true));
+        .add(new Exit(player, Door, true));
     }//Theo Frank
     @BuilderMethod
     public void talkWithBartender() {
@@ -145,10 +145,10 @@ public class MyNodeBuilder extends NodeBuilder {
     public void takeDrink() {
     	var node= get(MyNodeLabels.takeDrink.toString());
     	node.add(new DisableInput())
-    	.add(new WalkTo(player, Tavern.Chair))
-    	.add(new Sit(player,Tavern.Chair ))
+    	.add(new WalkTo(player, Chair))
+    	.add(new Sit(player,Chair ))
     	.add(new Drink(player))
-    	.add(new CreateEffect(player,Heart))
+    	.add(new CreateEffect(player,Heart));
     }
     @BuilderMethod
     public void talkWithBeggar() {
@@ -159,12 +159,12 @@ public class MyNodeBuilder extends NodeBuilder {
     @BuilderMethod
     public void enterForestPath() {
         var node = get(MyNodeLabels.enterForestPath.toString());
-        node.add(new Enter(player, ForestPath.EastEnd, true));
+        node.add(new Enter(player, EastEnd1, true));
     }
     @BuilderMethod
     public void exitForestPath() {
         var node = get(MyNodeLabels.exitForestPath.toString());
-        node.add(new Exit(player, ForestPath.EastEnd, true));
+        node.add(new Exit(player, EastEnd1, true));
     }
     @BuilderMethod
     public void atForestPath() {
@@ -198,23 +198,23 @@ public class MyNodeBuilder extends NodeBuilder {
     @BuilderMethod
     public void leaveToRuins() {
         var node = get(MyNodeLabels.leaveToRuins.toString());
-        node.add(new Exit(player, ForestPath.WestEnd, true));
+        node.add(new Exit(player, WestEnd1, true));
        
     }
     @BuilderMethod
     public void enterRuins() {
         var node = get(MyNodeLabels.enterRuins.toString());
-        node.add(new Enter(player, Ruins.Exit, true));
+        node.add(new Enter(player, Exit, true));
     }
     @BuilderMethod
     public void leaveRuins() {
         var node = get(MyNodeLabels.leaveRuins.toString());
-        node.add(new Exit(player, Ruins.Exit, true));
+        node.add(new Exit(player, Exit, true));
     }
     @BuilderMethod
     public void returnToForestPathFromRuins() {
         var node = get(MyNodeLabels.returnToForestPathFromRuins.toString());
-        node.add(new Enter(player, ForestPath.WestEnd, true));
+        node.add(new Enter(player, WestEnd1, true));
     }
 
     @BuilderMethod
@@ -268,14 +268,14 @@ public class MyNodeBuilder extends NodeBuilder {
     @BuilderMethod
     public void leaveCityToBridge() {
         var node = get(MyNodeLabels.leaveCityToBridge.toString());
-        node.add(new Exit(player, City.WestEnd, true))
-            .add(new Enter(player, Bridge.NorthEnd, true));
+        node.add(new Exit(player, WestEnd, true))
+            .add(new Enter(player, NorthEnd1, true));
     }
     @BuilderMethod
     public void returnToCityFromBridge() {
         var node = get(MyNodeLabels.returnToCityFromBridge.toString());
-        node.add(new Exit(player, Bridge.NorthEnd, true))
-            .add(new Enter(player, City.WestEnd, true));
+        node.add(new Exit(player, NorthEnd1, true))
+            .add(new Enter(player, WestEnd, true));
     }
 
     @BuilderMethod
@@ -289,8 +289,8 @@ public class MyNodeBuilder extends NodeBuilder {
     @BuilderMethod
     public void exitBridge() {
         var node = get(MyNodeLabels.exitBridge.toString());
-        node.add(new Exit(player, Bridge.SouthEnd, true))
-            .add(new Enter(player, Port.Exit, true));
+        node.add(new Exit(player, SouthEnd, true))
+            .add(new Enter(player, Exit1, true));
     }
     @BuilderMethod
     public void answerRiddle() {
@@ -310,7 +310,7 @@ public class MyNodeBuilder extends NodeBuilder {
     @BuilderMethod
     public void atPort() {
         var node = get(MyNodeLabels.atPort.toString());
-        node.add(new WalkTo(player, Port.BigStall))
+        node.add(new WalkTo(player, BigStall))
             .add(new Face(player, Merchant))
             .add(new DialogSequence(Merchant, null,
                 List.of("Hello my young friend. Would you care to buy this key that I found?"),
@@ -332,8 +332,8 @@ public class MyNodeBuilder extends NodeBuilder {
     @BuilderMethod
     public void leavePort() {
         var node = get(MyNodeLabels.leavePort.toString());
-        node.add(new Exit(player, Port.Exit, true))
-            .add(new Enter(player, Bridge.SouthEnd, true));
+        node.add(new Exit(player, Exit1, true))
+            .add(new Enter(player, SouthEnd, true));
     }
     @BuilderMethod
     public void talkWithKnight() {
@@ -352,7 +352,7 @@ public class MyNodeBuilder extends NodeBuilder {
     public void returnToThrone() {
         var node = get(MyNodeLabels.returnToThrone.toString());
         node.add(new FadeIn())
-            .add(new SetPosition(player, GreatHall.Supplicant))
+            .add(new SetPosition(player, RightThrone))
             .add(new SetCameraFocus(player))
             .add(new Face(King, player))
             .add(new DialogSequence(King, null,
