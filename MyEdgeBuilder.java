@@ -9,6 +9,7 @@ import com.storygraph.Node;
 import com.storygraph.NodeBuilder;
 import com.entities.IInteract;
 import com.playerInput.*;
+import com.playerInput.PlayerInteraction.*;
 
 
 public class MyEdgeBuilder extends NodeBuilder {
@@ -25,7 +26,6 @@ public class MyEdgeBuilder extends NodeBuilder {
 	 * The method should add the edges of the node one by one. 
 	 * These methods must have a BuilderMethod annotation.
 	 */
-
 	// Keenan Gray (all edges)
 	
 	@BuilderMethod
@@ -36,9 +36,20 @@ public class MyEdgeBuilder extends NodeBuilder {
 		root.add(new Edge(choice, nextNode));
 	}
 	
+
 	@BuilderMethod
 	public void inGreatHallEdges() {
 		var node = get(MyNodeLabels.GreatHall.toString());
+		var nextNode1 = get(MyNodeLabels.talkToKing.toString());
+		var choice1 = new PlayerInteraction(MyChoiceLabels.TalkToKing.toString(), King, Icons.talk,
+				"Talk to the questgiver.");
+		node.add(new Edge(choice1, nextNode1));
+		
+	}
+	
+	@BuilderMethod
+	public void talkToKingEdges() {
+		var node = get(MyNodeLabels.talkToKing.toString());
 		var nextNodeIfAccepted = get(MyNodeLabels.agreedToQuest.toString());
 		var acceptChoice = new DialogChoice("Yes!");
 		node.add(new Edge(acceptChoice, nextNodeIfAccepted));
@@ -46,44 +57,44 @@ public class MyEdgeBuilder extends NodeBuilder {
 		var rejectChoice = new DialogChoice("No Thanks");
 		node.add(new Edge(rejectChoice, nextNodeIfRejected));
 	}
-
+	
 	@BuilderMethod
 	public void rejectedQuestEdge() {
 		// resets game
 		var node = get(MyNodeLabels.doNotTakeQuest.toString());
 		var resetChoice = new DialogChoice("Close");
-		var nextNode = get(MyNodeLabels.root.toString());
+		var nextNode = get(MyNodeLabels.GreatHall.toString());
 		node.add(new Edge(resetChoice, nextNode));
 	}
 	@BuilderMethod
 	public void acceptedQuestEdge() {
 		var node = get(MyNodeLabels.agreedToQuest.toString());
-		var nextNode = get(MyNodeLabels.leaveGreatHall.toString());
-		var choice = new PlayerInteraction(MyChoiceLabels.ExitGreatHall.toString(), Gate, PlayerInteraction.Icons.exit, "Accept sword and leave Great Hall");
+		var nextNode = get(MyNodeLabels.enterCity.toString());
+		var choice = new DialogChoice("Accept sword and leave castle");
 		node.add(new Edge(choice, nextNode));
+		
 	}
-	
-	@BuilderMethod
+	/*@BuilderMethod
 	public void enterCityEdge() {
 		var node = get(MyNodeLabels.leaveGreatHall.toString());
 		var nextNode = get(MyNodeLabels.enterCity.toString());
 		var choice = new PlayerInteraction(player, MyChoiceLabels.EnterCity.toString(), Gate);
 		node.add(new Edge(choice, nextNode));
-	}
+	}*/
 	
 	@BuilderMethod
 	public void inCityEdges() {
 		var node = get(MyNodeLabels.enterCity.toString());
 		var nextNodeIfTavern = get(MyNodeLabels.enterTavern.toString());
-		var enterTavernChoice = new PlayerInteraction(MyChoiceLabels.EnterTavern.toString(), Door, PlayerInteraction.Icons.exit, "Enter the Tavern");
+		var enterTavernChoice = new PlayerInteraction(MyChoiceLabels.EnterTavern.toString(), TavernDoor, PlayerInteraction.Icons.exit, "Enter the Tavern");
 		node.add(new Edge(enterTavernChoice, nextNodeIfTavern));
 		var nextNodeIfBeggar = get(MyNodeLabels.talkWithBeggar.toString());
 		var talkToBeggarChoice = new PlayerInteraction(MyChoiceLabels.TalkToBeggar.toString(), beggar, PlayerInteraction.Icons.talk, "Talk to a beggar");
 		node.add(new Edge(talkToBeggarChoice, nextNodeIfBeggar));
 		var nextNodeIfForest = get(MyNodeLabels.enterForestPath.toString());
 		// TODO: how to get to forest??
-		var enterForestChoice = new PlayerInteraction(MyChoiceLabels.EnterForest.toString(), ForestFromCity, PlayerInteraction.Icons.exit, "Enter the forest");
-		node.add(new Edge(enterForestChoice, nextNodeIfForest));
+		//var enterForestChoice = new PlayerInteraction(MyChoiceLabels.EnterForest.toString(), ForestFromCity, PlayerInteraction.Icons.exit, "Enter the forest");
+		//node.add(new Edge(enterForestChoice, nextNodeIfForest));
 		var nextNodeIfBridge = get(MyNodeLabels.enterBridge.toString());
 		var bridgeChoice = new PlayerInteraction(MyChoiceLabels.GoToBridge.toString(), WestEnd, PlayerInteraction.Icons.exit, "Enter the forest");
 		node.add(new Edge(bridgeChoice, nextNodeIfBridge));
@@ -106,7 +117,7 @@ public class MyEdgeBuilder extends NodeBuilder {
 		var nextNodeIfBartender = get(MyNodeLabels.talkWithBartender.toString());
 		var talkToBartenderChoice = new PlayerInteraction(MyChoiceLabels.TalkToBartender.toString(), Bartender, PlayerInteraction.Icons.talk, "Talk to the bartender");
 		node.add(new Edge(talkToBartenderChoice, nextNodeIfBartender));
-		var leaveTavernChoice = new PlayerInteraction(player, MyChoiceLabels.ExitTavern.toString(), Door);
+		var leaveTavernChoice = new PlayerInteraction(player, MyChoiceLabels.ExitTavern.toString(), TavernDoor);
 		var nextNodeIfLeaving = get(MyNodeLabels.enterCity.toString());
 		node.add(new Edge(leaveTavernChoice, nextNodeIfLeaving));
 	}
@@ -246,7 +257,7 @@ public class MyEdgeBuilder extends NodeBuilder {
 	}
 	
 	@BuilderMethod
-	public void talkToKingEdges() {
+	public void talkToKingEndEdges() {
 		var node = get(MyNodeLabels.returnToThrone.toString());
 		var endChoice = new DialogChoice("The End");
 		// start over?
