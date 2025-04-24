@@ -32,7 +32,7 @@ public final class MyStoryEntities {
 	public static final Characters Priest = new Characters("Priest", BodyTypes.G, Clothing.Priest, HairStyle.Straight, Colors.Black,6);
 	public static final Characters Merchant = new Characters("Merchant", BodyTypes.B, Clothing.Merchant, HairStyle.Musketeer_Full, Colors.Black,6);
 	public static final Characters MysteryMan = new Characters("MysteryMan", BodyTypes.F, Clothing.Warlock, HairStyle.Mage_Full, Colors.Black,6);
-	public static final Characters Bandit = new Characters("Bandit", BodyTypes.C, Clothing.Bandit, HairStyle.Short_Full, Colors.Black,6);
+	public static final Characters Bandit = new Characters("Bandit", BodyTypes.C, Clothing.Bandit, HairStyle.Short, Colors.Black,6);
 	//Places-Theo Frank
 	public static final Place GreatHall = new Place("GreatHall", PlaceTypes.GreatHall);
 	public static final Place City = new Place("City", PlaceTypes.City);
@@ -48,7 +48,7 @@ public final class MyStoryEntities {
 	public static final Item Bottle = new Item("Bottle", ItemTypes.Bottle);
 	public static final Item BlueKey = new Item("BlueKey",ItemTypes.BlueKey);
 	public static final Item RedKey = new Item("RedKey",ItemTypes.RedKey);
-	public static final Item sword1 = new Item("sword", ItemTypes.Sword);
+	public static final Item sword1 = new Item("sword1", ItemTypes.Sword);
 	public static final Item Bag = new Item("Bag", ItemTypes.Bag);
 	public static final Item Apple = new Item("Apple", ItemTypes.Apple);
 	// Effects Theo Frank
@@ -70,7 +70,7 @@ public final class MyStoryEntities {
     public static final Furniture Gate = new Furniture(GreatHall, FurnitureTypes.Gate);
     public static final Furniture NorthEnd = new Furniture(City, FurnitureTypes.NorthEnd);
     public static final Furniture BlueHouseDoor = new Furniture(City, FurnitureTypes.BlueHouseDoor);
-    public static final Furniture Door = new Furniture(Tavern, FurnitureTypes.Door);
+    public static final Furniture TavernDoor = new Furniture(Tavern, FurnitureTypes.Door);
     public static final Furniture EastEnd1 = new Furniture(ForestPath, FurnitureTypes.EastEnd);
     public static final Furniture WestEnd1 = new Furniture(ForestPath, FurnitureTypes.WestEnd);
     public static final Furniture Exit = new Furniture(Ruins, FurnitureTypes.Exit);
