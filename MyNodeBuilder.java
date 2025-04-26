@@ -5,39 +5,14 @@ import java.util.List;
 import javax.sound.sampled.Port;
 
 import com.storygraph.*;
-import com.actions.EnableInput;
-import com.actions.SetCameraFocus;
-import com.actions.Face;
-import com.actions.ShowMenu;
-import com.actions.SetPosition;
-import com.actions.Take;
-import com.sequences.CreateCharacterSequence;
-import com.actions.Exit;
-import com.actions.Enter;
-import com.actions.Sit;
-import com.actions.Drink;
-import com.actions.DisableInput;
-import com.actions.CreateEffect;
 import com.actions.*;
 import com.sequences.*;
-import com.sequences.DialogSequence;
 import myclassproject.mystorygraph.*;
+
 //Theo Frank
 import static myclassproject.mystorygraph.MyStoryEntities.*;
-import static myclassproject.questexample.QuestStoryEntities.bandit;
-import static myclassproject.questexample.QuestStoryEntities.cityDoor;
-import static myclassproject.questexample.QuestStoryEntities.cottageDoor;
-import static myclassproject.questexample.QuestStoryEntities.player;
-
-import com.actions.Attack;
-import com.actions.Give;
 
 
-import com.actions.Wave;
-
-
-
-import myclassproject.questexample.NodeLabels;
 
 public class MyNodeBuilder extends NodeBuilder {
 	public MyNodeBuilder(List<Node> list) {
