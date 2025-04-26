@@ -1,17 +1,6 @@
 package myclassproject.mystorygraph;
 import com.entities.*;
-
-
-
-
-import com.enums.FurnitureTypes;
-import com.enums.ItemTypes;
-import com.enums.BodyTypes;
-import com.enums.Clothing;
-import com.enums.HairStyle;
-import com.enums.Colors;
-import com.enums.PlaceTypes;
-import com.enums.Effects;
+import com.enums.*;
 
 
 public final class MyStoryEntities {
@@ -52,31 +41,36 @@ public final class MyStoryEntities {
 	public static final Item Bag = new Item("Bag", ItemTypes.Bag);
 	public static final Item Apple = new Item("Apple", ItemTypes.Apple);
 	// Effects Theo Frank
-    public static final Furniture Chair = new Furniture(Tavern, FurnitureTypes.Chair);
-    public static final Furniture Bench = new Furniture(City, FurnitureTypes.Bench);
+
     public static final Furniture Throne = new Furniture(GreatHall, FurnitureTypes.Throne);
-    public static final Furniture Barrel = new Furniture(Tavern, FurnitureTypes.Barrel);
-    public static final Furniture Table = new Furniture(Tavern, FurnitureTypes.Table);
-    public static final Furniture Altar = new Furniture(ForestPath, FurnitureTypes.Altar);
+    public static final Furniture RightThrone = new Furniture(GreatHall, FurnitureTypes.RightThrone);
+    public static final Furniture Gate = new Furniture(GreatHall, FurnitureTypes.Gate);
+    
+    public static final Furniture BlueHouseDoor = new Furniture(City, FurnitureTypes.BlueHouseDoor);
     public static final Furniture WestEnd = new Furniture(City, FurnitureTypes.WestEnd);
     public static final Furniture EastEnd = new Furniture(City, FurnitureTypes.EastEnd);
     public static final Furniture Fountain = new Furniture(City, FurnitureTypes.Fountain);
-    public static final Furniture RedHouseDoor = new Furniture(City, FurnitureTypes.RedHouseDoor);
+    public static final Furniture CityDoor = new Furniture(City, FurnitureTypes.NorthEnd);
+    public static final Furniture TavernEntrance = new Furniture(City, FurnitureTypes.RedHouseDoor);
+    public static final Furniture Bench = new Furniture(City, FurnitureTypes.Bench);
+    
+    public static final Furniture Chair = new Furniture(Tavern, FurnitureTypes.Chair);
+    public static final Furniture TavernDoor = new Furniture(Tavern, FurnitureTypes.Door);
+    public static final Furniture Barrel = new Furniture(Tavern, FurnitureTypes.Barrel);
+    public static final Furniture Table = new Furniture(Tavern, FurnitureTypes.Table);
+    
     public static final Furniture SouthSign = new Furniture(Bridge, FurnitureTypes.SouthSign);
     public static final Furniture Plant = new Furniture(Ruins, FurnitureTypes.Plant);
     public static final Furniture BigStall = new Furniture(Port, FurnitureTypes.BigStall);
     public static final Furniture Plant1 = new Furniture(ForestPath, FurnitureTypes.Plant);
-    public static final Furniture RightThrone = new Furniture(GreatHall, FurnitureTypes.RightThrone);
-    public static final Furniture Gate = new Furniture(GreatHall, FurnitureTypes.Gate);
-    public static final Furniture NorthEnd = new Furniture(City, FurnitureTypes.NorthEnd);
-    public static final Furniture BlueHouseDoor = new Furniture(City, FurnitureTypes.BlueHouseDoor);
-    public static final Furniture TavernDoor = new Furniture(Tavern, FurnitureTypes.Door);
     public static final Furniture EastEnd1 = new Furniture(ForestPath, FurnitureTypes.EastEnd);
     public static final Furniture WestEnd1 = new Furniture(ForestPath, FurnitureTypes.WestEnd);
+    public static final Furniture Altar = new Furniture(ForestPath, FurnitureTypes.Altar);
     public static final Furniture Exit = new Furniture(Ruins, FurnitureTypes.Exit);
     public static final Furniture SouthEnd = new Furniture(Bridge, FurnitureTypes.SouthEnd);
     public static final Furniture NorthEnd1 = new Furniture(Bridge, FurnitureTypes.NorthEnd);
     public static final Furniture Exit1 = new Furniture(Port, FurnitureTypes.Exit);
+    
     public static final Effects Heart = Effects.Heart;
     public static final Effects Aura = Effects.Aura;
     public static final Effects Resurrection = Effects.Resurrection;
