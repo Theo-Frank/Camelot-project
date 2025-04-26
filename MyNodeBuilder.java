@@ -107,8 +107,17 @@ public class MyNodeBuilder extends NodeBuilder {
 	 @BuilderMethod
 	 public void agreedToQuest() {
 	     var node = get(MyNodeLabels.agreedToQuest.toString());
-	     node.add(new DialogSequence(player, King,List.of("Thank you for agreeing to aid my kingdom. Recently my kingdom has lost 2 keys of great importance and I need you to retrieve them. Each key is marked with a different color symbolizing a core of my kingdom: RED and BLUE. I have heard rumors that a bandit has one of the keys. Before you leave here is something to aid you on your quest."),List.of("Accept sword and leave castle")))
-	     .add(new HideDialog())
+	     node.add(new DialogSequence(
+	    		 player, 
+	    		 King,
+	    		 List.of("Thank you for agreeing to aid my kingdom. Recently my kingdom has lost 2 keys of great importance and I need you to retrieve them. Each key is marked with a different color symbolizing a core of my kingdom: RED and BLUE. I have heard rumors that a bandit has one of the keys. Before you leave here is something to aid you on your quest."),
+	    		 List.of("Accept sword")));
+	     }
+	 // Keenan Gray
+	 @BuilderMethod
+	 public void acceptedSword() {
+		 var node = get(MyNodeLabels.acceptedSword.toString());
+		 node.add(new HideDialog())
 	     .add(new Take(player, sword, King))
 	     .add(new Pocket(player, sword))
 	     .add(new EnableInput());
@@ -118,37 +127,36 @@ public class MyNodeBuilder extends NodeBuilder {
 	 @BuilderMethod
 	 public void doNotTakeQuest() {
 	     var node = get(MyNodeLabels.doNotTakeQuest.toString());
-	     node.add(new DialogSequence(player, King,List.of("And the Hero decided not to accept the quest, choosing to live happily ever after on a farm. The end."),List.of("Close")))
+	     node.add(new DialogSequence(player, King, List.of("And the Hero decided not to accept the quest, choosing to live happily ever after on a farm. The end."),List.of("Close")))
 	     .add(new HideDialog())
 	     .add(new EnableInput());
 	}
-
-		
+	
 	//theo Frank
 	@BuilderMethod
 	public void enterCity() {
 		var node = get(MyNodeLabels.enterCity.toString());
-		node.add(new DisableInput()).add(new Exit(player, Gate, true)).add(new Enter(player, RedHouseDoor, true))
+		node.add(new DisableInput()).add(new Exit(player, Gate, true)).add(new Enter(player, CityDoor, true))
 		.add(new EnableInput());
-		//.add(new Exit(player, NorthEnd, true))
-		//.add(new Exit(player,WestEnd,true))
-		//.add(new Exit(player, BlueHouseDoor,true));
-		
+
 	}//Theo Frank
     @BuilderMethod
     public void enterTavern() {
         var node = get(MyNodeLabels.enterTavern.toString());
-        node.add(new Enter(player, TavernDoor, true))
-        .add(new Wave(Bartender))
-        .add(new Face(player,Bartender));
+        node.add(new Enter(player, TavernDoor, false))
+        .add(new Face(player,Bartender))
+        .add(new Wave(Bartender));
         
-    }//Theo Frank
+    }
+
+    
+    //Theo Frank
     @BuilderMethod
     public void talkWithBartender() {
         var node = get(MyNodeLabels.talkWithBartender.toString());
         node.add(new Face(player, Bartender))
             .add(new DialogSequence(Bartender, null,
-                List.of("Would you like a drink to relax my young Hero?"),List.of("[No thanks|Leave]")));
+                List.of("Would you like a drink to relax my young Hero?"),List.of("Why not?", "No thanks")));
         
     }//Theo Frank
     @BuilderMethod
@@ -160,6 +168,23 @@ public class MyNodeBuilder extends NodeBuilder {
     	.add(new Drink(player))
     	.add(new CreateEffect(player,Heart));
     }
+    
+    //Keenan Gray
+    @BuilderMethod
+    public void inTavern() {
+    	var node = get(MyNodeLabels.inTavern.toString()); 
+    	node.add(new HideDialog()).add(new EnableInput());
+    }
+    
+    
+    @BuilderMethod
+    public void leaveTavern() {
+    	var node = get(MyNodeLabels.leaveTavern.toString());
+    	node.add(new DisableInput()).add(new Exit(player, Gate, true)).add(new Enter(player, CityDoor, true))
+		.add(new EnableInput());
+    }
+    
+    
     @BuilderMethod
     public void talkWithBeggar() {
         var node = get(MyNodeLabels.talkWithBeggar.toString());
