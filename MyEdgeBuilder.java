@@ -41,8 +41,7 @@ public class MyEdgeBuilder extends NodeBuilder {
 	public void inGreatHallEdges() {
 		var node = get(MyNodeLabels.GreatHall.toString());
 		var nextNode1 = get(MyNodeLabels.talkToKing.toString());
-		var choice1 = new PlayerInteraction(MyChoiceLabels.TalkToKing.toString(), King, Icons.talk,
-				"Talk to the questgiver.");
+		var choice1 = new PlayerInteraction(MyChoiceLabels.TalkToKing.toString(), King, PlayerInteraction.Icons.talk, "Talk to the questgiver");
 		node.add(new Edge(choice1, nextNode1));
 		
 	}
@@ -69,10 +68,17 @@ public class MyEdgeBuilder extends NodeBuilder {
 	@BuilderMethod
 	public void acceptedQuestEdge() {
 		var node = get(MyNodeLabels.agreedToQuest.toString());
-		var nextNode = get(MyNodeLabels.enterCity.toString());
-		var choice = new DialogChoice("Accept sword and leave castle");
+		var nextNode = get(MyNodeLabels.acceptedSword.toString());
+		var choice = new DialogChoice("Accept sword");
 		node.add(new Edge(choice, nextNode));
 		
+	}
+	@BuilderMethod
+	public void acceptedSwordEdge() {
+		var node = get(MyNodeLabels.acceptedSword.toString());
+		var nextNode = get(MyNodeLabels.enterCity.toString());
+		var choice = new PlayerInteraction(MyChoiceLabels.EnterCity.toString(), Gate, PlayerInteraction.Icons.exit, "Leave the Castle");
+		node.add(new Edge(choice, nextNode));
 	}
 	/*@BuilderMethod
 	public void enterCityEdge() {
@@ -86,7 +92,7 @@ public class MyEdgeBuilder extends NodeBuilder {
 	public void inCityEdges() {
 		var node = get(MyNodeLabels.enterCity.toString());
 		var nextNodeIfTavern = get(MyNodeLabels.enterTavern.toString());
-		var enterTavernChoice = new PlayerInteraction(MyChoiceLabels.EnterTavern.toString(), TavernDoor, PlayerInteraction.Icons.exit, "Enter the Tavern");
+		var enterTavernChoice = new PlayerInteraction(MyChoiceLabels.EnterTavern.toString(), TavernEntrance, PlayerInteraction.Icons.exit, "Enter the Tavern");
 		node.add(new Edge(enterTavernChoice, nextNodeIfTavern));
 		var nextNodeIfBeggar = get(MyNodeLabels.talkWithBeggar.toString());
 		var talkToBeggarChoice = new PlayerInteraction(MyChoiceLabels.TalkToBeggar.toString(), beggar, PlayerInteraction.Icons.talk, "Talk to a beggar");
@@ -118,17 +124,19 @@ public class MyEdgeBuilder extends NodeBuilder {
 		var talkToBartenderChoice = new PlayerInteraction(MyChoiceLabels.TalkToBartender.toString(), Bartender, PlayerInteraction.Icons.talk, "Talk to the bartender");
 		node.add(new Edge(talkToBartenderChoice, nextNodeIfBartender));
 		var leaveTavernChoice = new PlayerInteraction(player, MyChoiceLabels.ExitTavern.toString(), TavernDoor);
-		var nextNodeIfLeaving = get(MyNodeLabels.enterCity.toString());
+		var nextNodeIfLeaving = get(MyNodeLabels.leaveTavern.toString());
 		node.add(new Edge(leaveTavernChoice, nextNodeIfLeaving));
 	}
 	
 	@BuilderMethod
 	public void bartenderEdges() {
 		var node = get(MyNodeLabels.talkWithBartender.toString());
-		var bartenderCloseChoice = new DialogChoice("Close");
-		var nextNodeIfClose = get(MyNodeLabels.enterTavern.toString());
-		node.add(new Edge(bartenderCloseChoice, nextNodeIfClose));
-		// add take drink edge?
+		var choice1 = new DialogChoice("Why not?");
+		var nextNode1 = get(MyNodeLabels.takeDrink.toString());
+		node.add(new Edge(choice1, nextNode1));
+		var choice2 = new DialogChoice("No thanks");
+		var nextNode2 = get(MyNodeLabels.inTavern.toString());
+		node.add(new Edge(choice2, nextNode2));
 	}
 	
 	@BuilderMethod
