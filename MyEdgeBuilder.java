@@ -111,12 +111,20 @@ public class MyEdgeBuilder extends NodeBuilder {
 	
 	@BuilderMethod
 	public void beggarEdges() {
-		var node = get(MyNodeLabels.talkWithBeggar.toString());
-		var beggarClose = new DialogChoice("Close");
-		var nextNode = get(MyNodeLabels.enterCity.toString());
-		node.add(new Edge(beggarClose, nextNode));
-
+	    var node = get(MyNodeLabels.talkWithBeggar.toString());
+	    var beggarClose = new DialogChoice("Close");
+	    var nextNode = get(MyNodeLabels.closeBeggarDialog.toString());
+	    node.add(new Edge(beggarClose, nextNode));
 	}
+
+	@BuilderMethod
+	public void closeBeggarDialogEdges() {
+	    var node = get(MyNodeLabels.closeBeggarDialog.toString());
+	    var closeChoice = new DialogChoice("Close");
+	    var nextNode = get(MyNodeLabels.enterCity.toString());
+	    node.add(new Edge(closeChoice, nextNode));
+	}
+
 	@BuilderMethod
 	public void inTavernEdges() {
 		var node = get(MyNodeLabels.enterTavern.toString());
@@ -138,6 +146,14 @@ public class MyEdgeBuilder extends NodeBuilder {
 		var nextNode2 = get(MyNodeLabels.inTavern.toString());
 		node.add(new Edge(choice2, nextNode2));
 	}
+	@BuilderMethod
+	public void bartenderDialogEdges() {
+	    var node = get(MyNodeLabels.talkWithBartender.toString());
+	    var choice = new DialogChoice("Close");
+	    var nextNode = get(MyNodeLabels.closeBartenderDialog.toString());
+	    node.add(new Edge(choice, nextNode));
+	}
+
 	
 	@BuilderMethod
 	public void inForestEdges() {

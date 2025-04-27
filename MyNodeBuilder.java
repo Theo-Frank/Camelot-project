@@ -46,6 +46,7 @@ public class MyNodeBuilder extends NodeBuilder {
 		.add(new SetPosition(RedKey,Merchant))
 		.add(new SetPosition(BlueKey,Bandit))
 		.add(new SetPosition(Bag,Bandit))
+		.add(new SetPosition(Bottle,Bartender))
 		.add(new SetPosition(MysteryMan, SouthSign))
 		.add(new SetPosition(Priest, Plant1))
 		.add(new SetPosition(player, RightThrone))
@@ -54,7 +55,6 @@ public class MyNodeBuilder extends NodeBuilder {
 		.add(new SetPosition(Bartender, Barrel))
 		.add(new Face(player,King))
 		.add(new SetPosition(sword, King))
-		.add(new SetPosition(Bottle,Bartender))
 		.add(new SetCameraFocus(player))
 		.add(new ShowMenu());
 		
@@ -130,18 +130,27 @@ public class MyNodeBuilder extends NodeBuilder {
     public void talkWithBartender() {
         var node = get(MyNodeLabels.talkWithBartender.toString());
         node.add(new Face(player, Bartender))
-            .add(new DialogSequence(Bartender, null,
+            .add(new DialogSequence(Bartender, player,
                 List.of("Would you like a drink to relax my young Hero?"),List.of("Why not?", "No thanks")));
         
     }//Theo Frank
     @BuilderMethod
+    public void closeBartenderDialog() {
+        var node = get(MyNodeLabels.closeBartenderDialog.toString());
+        node.add(new HideDialog());
+    }
+
+    @BuilderMethod
     public void takeDrink() {
     	var node= get(MyNodeLabels.takeDrink.toString());
     	node.add(new DisableInput())
+        .add(new HideDialog())
+	    .add(new Take(player, Bottle, Bartender))
     	.add(new WalkTo(player, Chair))
     	.add(new Sit(player,Chair ))
     	.add(new Drink(player))
-    	.add(new CreateEffect(player,Heart));
+    	.add(new CreateEffect(player,Heart))
+    	.add(new EnableInput());
     }
     
     //Keenan Gray
@@ -163,8 +172,19 @@ public class MyNodeBuilder extends NodeBuilder {
     @BuilderMethod
     public void talkWithBeggar() {
         var node = get(MyNodeLabels.talkWithBeggar.toString());
-        node.add(new DialogSequence(beggar, null,List.of("Hello my friend, I heard you are off on a quest. I hope you succeed and aid our kingdom."),List.of("[Close|Close]")));
-    }//Theo Frank
+        node.add(new DialogSequence(beggar, player,
+            List.of("Hello my friend, I heard you are off on a quest. I hope you succeed and can aid our kingdom."),
+            List.of("Close")));
+    }
+    @BuilderMethod
+    public void closeBeggarDialog() {
+        var node = get(MyNodeLabels.closeBeggarDialog.toString());
+        node.add(new HideDialog());
+    }
+
+
+
+//Theo Frank
     
     @BuilderMethod
     public void enterForestPath() {

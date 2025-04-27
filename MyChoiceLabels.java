@@ -6,4 +6,3 @@ public enum MyChoiceLabels {
 	EnterForest, TalkToPriest, ExitForest, EnterRuins, ExitRuins, TakeBlueKey, TakeRedKey, GoToBridge, TalkToMysteryMan, ReturnToGreatHall;
 	
 }
-
