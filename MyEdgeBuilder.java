@@ -91,23 +91,30 @@ public class MyEdgeBuilder extends NodeBuilder {
 	@BuilderMethod
 	public void inCityEdges() {
 		var node = get(MyNodeLabels.enterCity.toString());
+
 		var nextNodeIfTavern = get(MyNodeLabels.enterTavern.toString());
 		var enterTavernChoice = new PlayerInteraction(MyChoiceLabels.EnterTavern.toString(), TavernEntrance, PlayerInteraction.Icons.exit, "Enter the Tavern");
 		node.add(new Edge(enterTavernChoice, nextNodeIfTavern));
+
 		var nextNodeIfBeggar = get(MyNodeLabels.talkWithBeggar.toString());
 		var talkToBeggarChoice = new PlayerInteraction(MyChoiceLabels.TalkToBeggar.toString(), beggar, PlayerInteraction.Icons.talk, "Talk to a beggar");
 		node.add(new Edge(talkToBeggarChoice, nextNodeIfBeggar));
+
+
 		var nextNodeIfForest = get(MyNodeLabels.enterForestPath.toString());
-		// TODO: how to get to forest??
-		//var enterForestChoice = new PlayerInteraction(MyChoiceLabels.EnterForest.toString(), ForestFromCity, PlayerInteraction.Icons.exit, "Enter the forest");
-		//node.add(new Edge(enterForestChoice, nextNodeIfForest));
+		var enterForestChoice = new PlayerInteraction(MyChoiceLabels.EnterForest.toString(), EastEnd, PlayerInteraction.Icons.exit, "Enter the Forest Path");
+		node.add(new Edge(enterForestChoice, nextNodeIfForest));
+
+
 		var nextNodeIfBridge = get(MyNodeLabels.enterBridge.toString());
-		var bridgeChoice = new PlayerInteraction(MyChoiceLabels.GoToBridge.toString(), WestEnd, PlayerInteraction.Icons.exit, "Enter the forest");
+		var bridgeChoice = new PlayerInteraction(MyChoiceLabels.GoToBridge.toString(), WestEnd, PlayerInteraction.Icons.exit, "Go to the Bridge");
 		node.add(new Edge(bridgeChoice, nextNodeIfBridge));
-		var returnToCastleChoice = new PlayerInteraction(MyChoiceLabels.ReturnToGreatHall.toString(), Gate, PlayerInteraction.Icons.exit, "Go back to the great hall");
+
+		var returnToCastleChoice = new PlayerInteraction(MyChoiceLabels.ReturnToGreatHall.toString(), Gate, PlayerInteraction.Icons.exit, "Return to the Great Hall");
 		var nextNodeIfCastle = get(MyNodeLabels.talkWithKnight.toString());
 		node.add(new Edge(returnToCastleChoice, nextNodeIfCastle));
 	}
+
 	
 	@BuilderMethod
 	public void beggarEdges() {

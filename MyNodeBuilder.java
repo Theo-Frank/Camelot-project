@@ -145,12 +145,12 @@ public class MyNodeBuilder extends NodeBuilder {
     	var node= get(MyNodeLabels.takeDrink.toString());
     	node.add(new DisableInput())
         .add(new HideDialog())
-	    .add(new Take(player, Bottle, Bartender))
     	.add(new WalkTo(player, Chair))
     	.add(new Sit(player,Chair ))
     	.add(new Drink(player))
     	.add(new CreateEffect(player,Heart))
     	.add(new EnableInput());
+  
     }
     
     //Keenan Gray
@@ -164,7 +164,7 @@ public class MyNodeBuilder extends NodeBuilder {
     @BuilderMethod
     public void leaveTavern() {
     	var node = get(MyNodeLabels.leaveTavern.toString());
-    	node.add(new DisableInput()).add(new Exit(player, Gate, true)).add(new Enter(player, CityDoor, true))
+    	node.add(new DisableInput()).add(new Exit(player, TavernDoor, true)).add(new Enter(player, CityDoor, true))
 		.add(new EnableInput());
     }
     
@@ -185,12 +185,16 @@ public class MyNodeBuilder extends NodeBuilder {
 
 
 //Theo Frank
-    
     @BuilderMethod
     public void enterForestPath() {
         var node = get(MyNodeLabels.enterForestPath.toString());
-        node.add(new Enter(player, EastEnd1, true));
+        node.add(new DisableInput())
+            .add(new Exit(player, EastEnd, true)) 
+            .add(new Enter(player, EastEnd1, true)) 
+            .add(new EnableInput());
     }
+
+
     @BuilderMethod
     public void exitForestPath() {
         var node = get(MyNodeLabels.exitForestPath.toString());

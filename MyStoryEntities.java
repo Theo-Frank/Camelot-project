@@ -70,7 +70,6 @@ public final class MyStoryEntities {
     public static final Furniture SouthEnd = new Furniture(Bridge, FurnitureTypes.SouthEnd);
     public static final Furniture NorthEnd1 = new Furniture(Bridge, FurnitureTypes.NorthEnd);
     public static final Furniture Exit1 = new Furniture(Port, FurnitureTypes.Exit);
-    
     public static final Effects Heart = Effects.Heart;
     public static final Effects Aura = Effects.Aura;
     public static final Effects Resurrection = Effects.Resurrection;
