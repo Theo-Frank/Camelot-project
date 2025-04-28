@@ -1,3 +1,4 @@
+
 package myclassproject.mystorygraph;
 
 import java.util.List;
@@ -39,21 +40,17 @@ public class MyNodeBuilder extends NodeBuilder {
 		.add(new CreateCharacterSequence(Merchant))
 		.add(new CreateCharacterSequence(Bandit))
 		.add(new SetPosition(Merchant, Horse))
-		.add(new SetPosition(Knight,CellDoor))
-		.add(new SetPosition(Bandit, Plant))
-		.add(new SetPosition(Apple,MysteryMan))
-		.add(new SetPosition(sword1,Bandit))
-		.add(new SetPosition(Bandit, Plant))
 		.add(new SetPosition(RedKey,Merchant))
-		.add(new SetPosition(BlueKey,Bandit))
 		.add(new SetPosition(Bag,Bandit))
-		.add(new SetPosition(Bottle,Bartender))
 		.add(new SetPosition(MysteryMan, SouthSign))
 		.add(new SetPosition(Priest, Plant1))
 		.add(new SetPosition(player, RightThrone))
 		.add(new SetPosition(King, Throne))
 		.add(new SetPosition(beggar,Fountain))
 		.add(new SetPosition(Bartender, Barrel))
+		.add(new SetPosition(Bottle, Bar))
+		.add(new SetPosition(BlueKey, Table))
+		.add(new SetPosition(BlueKey))
 		.add(new Face(player,King))
 		.add(new SetPosition(sword, King))
 		.add(new SetCameraFocus(player))
@@ -114,48 +111,12 @@ public class MyNodeBuilder extends NodeBuilder {
 		var node = get(MyNodeLabels.enterCity.toString());
 		node.add(new DisableInput()).add(new Exit(player, Gate, true)).add(new Enter(player, CityDoor, true))
 		.add(new EnableInput());
-
-	}//Theo Frank
-    @BuilderMethod
-    public void enterTavern() {
-        var node = get(MyNodeLabels.enterTavern.toString());
-        node.add(new Enter(player, TavernDoor, false))
-        .add(new Face(player,Bartender))
-        .add(new Wave(Bartender));
-        
-    }
-
-
-
-    
-    //Theo Frank
-    @BuilderMethod
-    public void talkWithBartender() {
-        var node = get(MyNodeLabels.talkWithBartender.toString());
-        node.add(new Face(player, Bartender))
-            .add(new DialogSequence(Bartender, player,
-                List.of("Would you like a drink to relax my young Hero?"),List.of("Why not?", "No thanks")));
-        
-    }//Theo Frank
-    @BuilderMethod
-    public void closeBartenderDialog() {
-        var node = get(MyNodeLabels.closeBartenderDialog.toString());
-        node.add(new HideDialog());
-    }
-
-    @BuilderMethod
-    public void takeDrink() {
-    	var node= get(MyNodeLabels.takeDrink.toString());
-    	node.add(new DisableInput())
-        .add(new HideDialog())
-    	.add(new WalkTo(player, Chair))
-    	.add(new Sit(player,Chair ))
-    	.add(new Drink(player))
-    	.add(new CreateEffect(player,Heart))
-    	.add(new EnableInput());
-  
-    }
-    
+	}
+	
+	public void inCity() {
+		var node = get(MyNodeLabels.inCity.toString());
+		node.add(new EnableInput());
+	}
     
     @BuilderMethod
     public void tradeMerchant() {
@@ -181,21 +142,61 @@ public class MyNodeBuilder extends NodeBuilder {
     @BuilderMethod
     public void declineTrade() {
     	var node= get(MyNodeLabels.declineTrade.toString());
-    	node.add(new DialogSequence(player,Merchant,List.of("I see, have a good day then"),List.of("close")))
+    	node.add(new DialogSequence(player,Merchant,List.of("I see, have a good day then"),List.of("Close")))
     	.add(new Wait(5))
     	.add(new HideDialog())
     	.add(new EnableInput());
     	
     }
 
+    @BuilderMethod
+    public void enterTavern() {
+	    var node = get(MyNodeLabels.enterTavern.toString());
+	    node.add(new Face(Bartender, player))
+	    .add(new Enter(player, TavernDoor, false))
+	    .add(new Wave(Bartender));
+}
+
+    //Theo Frank
+    @BuilderMethod
+    public void talkWithBartender() {
+        var node = get(MyNodeLabels.talkWithBartender.toString());
+        node.add(new Face(player, Bartender))
+            .add(new DialogSequence(Bartender, player,
+                List.of("Would you like a drink to relax my young Hero?"),List.of("Why not?", "No thanks")));
+        
+    }//Theo Frank
+    @BuilderMethod
+    public void closeBartenderDialog() {
+        var node = get(MyNodeLabels.closeBartenderDialog.toString());
+        node.add(new HideDialog()).add(new EnableInput());
+    }
+
+    @BuilderMethod
+    public void takeDrink() {
+    	var node = get(MyNodeLabels.takeDrink.toString());
+    	node.add(new DisableInput())
+    	.add(new Take(player, Bottle))
+        .add(new HideDialog())
+    	.add(new WalkTo(player, Chair))
+    	.add(new Sit(player,Chair ))
+    	.add(new Drink(player))
+    	.add(new CreateEffect(player,Heart))
+    	.add(new NarrationSequence("Strangely, you found a blue key at the bottom of your drink!"));
+    }
+    
     //Keenan Gray
     @BuilderMethod
     public void inTavern() {
     	var node = get(MyNodeLabels.inTavern.toString()); 
-    	node.add(new HideDialog()).add(new EnableInput());
+    	node.add(new HideNarration()).add(new EnableInput());
     }
     
-    
+    public void rejectDrink() {
+    	var node = get(MyNodeLabels.refuseDrink.toString()); 
+    	node.add(new HideDialog()).add(new EnableInput());
+    }
+
     @BuilderMethod
     public void leaveTavern() {
     	var node = get(MyNodeLabels.leaveTavern.toString());
@@ -217,7 +218,7 @@ public class MyNodeBuilder extends NodeBuilder {
         node.add(new HideDialog());
     }
 
-
+/*
 
 //Theo Frank
     @BuilderMethod
@@ -263,7 +264,7 @@ public class MyNodeBuilder extends NodeBuilder {
                 List.of("May peace be with you, brave one."),
                 List.of("Close")));
     }
-
+*/
 
     @BuilderMethod
     public void leaveToRuins() {
