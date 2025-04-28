@@ -28,7 +28,7 @@ public class MyNodeBuilder extends NodeBuilder {
 	@BuilderMethod
 	public void rootActions() {
 		var root = get(MyNodeLabels.root.toString());
-		root.add(new CreateAll(List.of(GreatHall, City, Tavern, ForestPath, Bridge, Port, Ruins, sword, Bottle, BlueKey, RedKey, sword1, Bag, Apple)))
+		root.add(new CreateAll(List.of(GreatHall, City,Dungeon, Tavern, ForestPath, Bridge, Port, Ruins, sword, Bottle, BlueKey, RedKey, sword1, Bag, Apple)))
 		.add(new CreateCharacterSequence(player))
 		.add(new CreateCharacterSequence(King))
 		.add(new CreateCharacterSequence(beggar))
@@ -38,7 +38,8 @@ public class MyNodeBuilder extends NodeBuilder {
 		.add(new CreateCharacterSequence(MysteryMan))
 		.add(new CreateCharacterSequence(Merchant))
 		.add(new CreateCharacterSequence(Bandit))
-		.add(new SetPosition(Merchant, BigStall))
+		.add(new SetPosition(Merchant, Horse))
+		.add(new SetPosition(Knight,CellDoor))
 		.add(new SetPosition(Bandit, Plant))
 		.add(new SetPosition(Apple,MysteryMan))
 		.add(new SetPosition(sword1,Bandit))
@@ -124,6 +125,8 @@ public class MyNodeBuilder extends NodeBuilder {
         
     }
 
+
+
     
     //Theo Frank
     @BuilderMethod
@@ -153,6 +156,38 @@ public class MyNodeBuilder extends NodeBuilder {
   
     }
     
+    
+    @BuilderMethod
+    public void tradeMerchant() {
+    	var node=get(MyNodeLabels.tradeMerchant.toString());
+    	node.add(new DialogSequence(Merchant,player, List.of("Hello My young friend, would you be interested in a trade on this fine day?"),List.of("Yeah!","No thank you, not today")));
+    }
+    @BuilderMethod
+    public void whatToOffer() {
+    	var node = get(MyNodeLabels.whatToOffer.toString());
+    	node.add(new DialogSequence(Merchant,player,List.of("I have this magic key that might interest you, would you be inclined to trade it for your sword?"),List.of("sure","No, Why would i give up my protection")));
+    }
+    @BuilderMethod
+    public void acceptTrade() {
+    	var node = get(MyNodeLabels.acceptTrade.toString());
+    	node.add(new HideDialog())
+    	.add(new Take(player,RedKey,Merchant))
+    	.add(new Pocket(player,RedKey))
+    	.add(new Take(Merchant,sword,player))
+    	.add(new Pocket(Merchant,sword))
+    	.add(new EnableInput());
+    	
+    }
+    @BuilderMethod
+    public void declineTrade() {
+    	var node= get(MyNodeLabels.declineTrade.toString());
+    	node.add(new DialogSequence(player,Merchant,List.of("I see, have a good day then"),List.of("close")))
+    	.add(new Wait(5))
+    	.add(new HideDialog())
+    	.add(new EnableInput());
+    	
+    }
+
     //Keenan Gray
     @BuilderMethod
     public void inTavern() {

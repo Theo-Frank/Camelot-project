@@ -103,6 +103,42 @@ public class MyEdgeBuilder extends NodeBuilder {
 	    var choice = new PlayerInteraction(MyChoiceLabels.TalkToBeggar.toString(), beggar, PlayerInteraction.Icons.talk, "Talk to a beggar");
 	    node.add(new Edge(choice, nextNode));
 	}
+	@BuilderMethod
+	public void cityEdgeToMerchant() {
+		var node = get(MyNodeLabels.enterCity.toString());
+		var nextNode = get(MyNodeLabels.tradeMerchant.toString());
+		var choice = new PlayerInteraction(MyChoiceLabels.TalkToMerchant.toString(), Merchant, PlayerInteraction.Icons.talk, "Talk With the Merchant");
+		node.add(new Edge(choice, nextNode));
+	}
+	@BuilderMethod
+	public void tradeMerchantEdges() {
+	    var node = get(MyNodeLabels.tradeMerchant.toString());
+
+	    var acceptTalkChoice = new DialogChoice("Yeah!");
+	    var nextNodeTalk = get(MyNodeLabels.whatToOffer.toString());
+	    node.add(new Edge(acceptTalkChoice, nextNodeTalk));
+
+	    var declineTalkChoice = new DialogChoice("No thank you, not today");
+	    var nextNodeDecline = get(MyNodeLabels.declineTrade.toString());
+	    node.add(new Edge(declineTalkChoice, nextNodeDecline));
+	}
+
+	@BuilderMethod
+	public void whatToOfferEdges() {
+	    var node = get(MyNodeLabels.whatToOffer.toString());
+	    
+	    var acceptTradeChoice = new DialogChoice("sure");
+	    var nextNodeAccept = get(MyNodeLabels.acceptTrade.toString());
+	    node.add(new Edge(acceptTradeChoice, nextNodeAccept));
+	    
+	    var declineOfferChoice = new DialogChoice("No, Why would i give up my protection");
+	    var nextNodeDecline = get(MyNodeLabels.declineTrade.toString());
+	    node.add(new Edge(declineOfferChoice, nextNodeDecline));
+	}
+	
+
+
+
 
 	@BuilderMethod
 	public void cityEdgeToForestPath() {

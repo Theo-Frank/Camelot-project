@@ -30,6 +30,8 @@ public final class MyStoryEntities {
 	public static final Place Bridge = new Place("Bridge", PlaceTypes.Bridge);
 	public static final Place Port = new Place("Port", PlaceTypes.Port);
 	public static final Place Ruins = new Place("Ruins", PlaceTypes.Ruins);
+	public static final Place Dungeon = new Place("Dungeon", PlaceTypes.Dungeon);
+
 	
 	
 	// Items-Theo Frank
@@ -53,6 +55,14 @@ public final class MyStoryEntities {
     public static final Furniture CityDoor = new Furniture(City, FurnitureTypes.NorthEnd);
     public static final Furniture TavernEntrance = new Furniture(City, FurnitureTypes.RedHouseDoor);
     public static final Furniture Bench = new Furniture(City, FurnitureTypes.Bench);
+    public static final Furniture Horse = new Furniture(City, FurnitureTypes.Barrel);
+    public static final Furniture GreenHouseDoor = new Furniture(City, FurnitureTypes.GreenHouseDoor);  
+    public static final Furniture Door = new Furniture(Dungeon, FurnitureTypes.Door);  
+    public static final Furniture CellDoor = new Furniture(Dungeon, FurnitureTypes.CellDoor);   
+
+    
+
+    
     
     public static final Furniture Chair = new Furniture(Tavern, FurnitureTypes.Chair);
     public static final Furniture TavernDoor = new Furniture(Tavern, FurnitureTypes.Door);
